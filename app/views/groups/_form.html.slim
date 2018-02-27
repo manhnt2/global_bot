@@ -1,0 +1,12 @@
+= form_with model: [project, group], local: true do |f|
+  = render 'shared/error_messages', object: group
+
+  = f.hidden_field :project_id
+
+  = f.label :name
+  = f.text_field :name
+  = f.fields_for :user_groups do |user_group_field|
+    = user_group_field.hidden_field :user_id
+    = user_group_field.hidden_field :role
+
+  = f.submit

@@ -1,0 +1,11 @@
+= form_with model: [program, program_param], class: "#{program_param.status} program_param_#{program_param.object_id}" do |f|
+  = hidden_field_tag :object_id, program_param.object_id
+  = f.hidden_field :program_id
+  = f.hidden_field :program_parammable_type
+  = f.hidden_field :program_parammable_id
+
+  .form-group
+    = f.label :unipos_request
+    = f.text_field :unipos_request
+
+  = f.submit

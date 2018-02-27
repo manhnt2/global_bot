@@ -1,0 +1,11 @@
+h3 Groups
+table#groups.table
+  - @project.groups.where(id: current_user.user_groups.pluck(:group_id)).each do |group|
+    tr class="group_#{group.id}"
+      td= link_to group.name, [@project, group]
+      td= "admin: #{group.user_groups.admin.count}; member: #{group.user_groups.member.count}"
+
+= link_to 'create new group', new_project_group_path(@project)
+
+/ h3 Programs
+/ = link_to 'create new program', new_program_path

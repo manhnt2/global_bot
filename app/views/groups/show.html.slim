@@ -1,0 +1,49 @@
+- current_user_group = current_user.user_groups.where(group_id: @group.id).first
+- if current_user_group
+  h2
+    | Invite link
+    | (
+    = link_to nil, request.url
+    | )
+  h3 Admins
+  ul
+    - @group.user_groups.admin.each do |user_group|
+      li
+        = user_group.user.email
+        - if current_user_group.admin?
+          | (
+          = link_to 'make member', '#'
+          | |
+          = link_to 'remove', '#'
+          | )
+
+  h3 Members
+  ul
+    - @group.user_groups.member.each do |user_group|
+      li
+        = user_group.user.email
+        - if current_user_group.admin?
+          | (
+          = link_to 'make admin', '#'
+          | |
+          = link_to 'remove', '#'
+          | )
+
+  h3 Programs
+  ul
+    - @group.programs.each do |program|
+      li
+        - program_param = ProgramParam.find_or_initialize_by(program_id: program.id, program_parammable_type: UserGroup.name, program_parammable_id: current_user_group.id)
+        = program.program_type_i18n
+        - if program.share_each_group_member?
+          = "[unipos_share_number=#{program.unipos_share_number}; active_user=#{program.program_params.ok.size}; coin_status=#{program_param.unipos_received_number}]"
+        | (
+        = link_to 'hướng dẫn', program_tutorial_path(program)
+        | )
+        = render 'program_params/form', program: program, program_param: program_param
+  = link_to 'add a program', new_group_program_path(@group) if current_user_group.admin?
+- else
+  = form_with model: [@group, UserGroup.new(user_id: current_user.id, group_id: @group.id)] do |f|
+    = f.hidden_field :user_id
+    = f.hidden_field :group_id
+    = f.submit 'join group'

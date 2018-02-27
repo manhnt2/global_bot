@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  programmable: one
+  program_type: 1
+
+two:
+  programmable: two
+  program_type: 1

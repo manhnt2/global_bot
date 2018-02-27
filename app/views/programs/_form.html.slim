@@ -1,0 +1,13 @@
+= form_with model: program, local: true do |f|
+  = render 'shared/error_messages', object: program
+
+  = f.hidden_field :programmable_id
+  = f.hidden_field :programmable_type
+  br
+  = f.select :program_type, options_from_collection_for_select(Program.program_types, :first, :first, program.program_type)
+
+  .form-group
+    = f.label :unipos_share_number
+    = f.number_field :unipos_share_number
+
+  = f.submit

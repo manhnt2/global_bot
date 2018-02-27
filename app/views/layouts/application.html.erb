@@ -9,6 +9,32 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="wrapper">
+        <nav id="sidebar">
+          <% if current_user %>
+            <li>
+              <%= current_user.email %>
+              (<%= link_to 'logout',destroy_user_session_path, method: :delete %>)
+            </li>
+          <% end %>
+          <% @projects.each do |project| %>
+            <li>
+              <% if current_user %>
+                <%= link_to project.project_type_i18n, project %>
+              <% else %>
+                <%= project.project_type_i18n %>
+              <% end %>
+            </li>
+          <% end %>
+        </nav>
+
+        <div id="content">
+            <!-- <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-align-left"></i>
+                Toggle Sidebar
+            </button> -->
+            <%= yield %>
+        <div>
+      </div>
   </body>
 </html>

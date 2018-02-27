@@ -1,0 +1,19 @@
+ul
+  - if current_user
+    li= link_to 'logout', destroy_user_session_path, method: :delete
+  - else
+    li= link_to 'login', new_user_session_path
+    li= link_to 'register', new_user_registration_path
+
+h4 Global Bot
+
+ul
+  - @projects.each do |project|
+    li
+      - if current_user
+        = link_to project
+          / = image_tag project.logo.url(:sm)
+          = project.project_type_i18n
+      - else
+        / = image_tag project.logo.url(:sm)
+        = project.project_type_i18n
